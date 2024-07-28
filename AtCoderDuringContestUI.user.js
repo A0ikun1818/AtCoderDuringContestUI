@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-07-28
+// @version      2024-07-28-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=atcoder.jp
 // @grant        none
+// @updateURL    https://github.com/A0ikun1818/AtCoderDuringContestUI/raw/main/AtCoderDuringContestUI.user.js
+// @downloadURL  https://github.com/A0ikun1818/AtCoderDuringContestUI/raw/main/AtCoderDuringContestUI.user.js
 // ==/UserScript==
 
 (function() {
@@ -35,9 +37,10 @@
         // バーチャル順位表タブ削除
         let style = document.createElement('style');
         style.id = "atcoder-virtual-hidden";
+        style.classList.add("atcoder-during-contest-ui");
         style.type = "text/css";
         style.innerHTML = ""+
-            "li:has(a[href*='virtual']){\n"+
+            "li:has(>a[href*='virtual']), li:has(>a[href*='extended']){\n"+
             "    display: none !important;\n"+
             "}\n";
         document.querySelector('html').appendChild(style);
@@ -46,6 +49,7 @@
         // 解説タブ・ボタン削除
         let style = document.createElement('style');
         style.id = "atcoder-editorial-hidden";
+        style.classList.add("atcoder-during-contest-ui");
         style.type = "text/css";
         style.innerHTML = ""+
             "li:has(a[href*='editorial']), a[href*='editorial']{\n"+
@@ -71,6 +75,7 @@
             + '  </button>';
             let msgWindow = document.createElement('div');
             msgWindow.classList.add("alert","alert-warning","alert-dismissible","show");
+            msgWindow.classList.add("atcoder-during-contest-ui");
             msgWindow.role = "alert";
             msgWindow.innerHTML = msg;
 
@@ -82,6 +87,7 @@
 
             let msgWindow2 = document.createElement('div');
             msgWindow2.classList.add("alert","alert-warning","alert-dismissible","show");
+            msgWindow2.classList.add("atcoder-during-contest-ui");
             msgWindow2.role = "alert";
             msgWindow2.innerHTML = msg2;
 
@@ -89,6 +95,22 @@
             if(contestId.match(/abc[0-9]{3}/)!=null && contestId>="abc357") insertZone.prepend(msgWindow2);
             // AHCでは注意書きを出さない
             if(contestId.match(/(a[brg]c[0-9]{3}|[a-z]{4,9}[0-9]{4})/)!=null) insertZone.prepend(msgWindow);
+
+            // 停止ボタン生成
+            {
+                let stopButton = document.createElement('button');
+                stopButton.innerHTML = "Stop During Mode";
+                stopButton.classList.add("btn","btn-warning","btn-sm","atcoder-during-contest-ui");
+                stopButton.addEventListener('click', function(){
+                    let allScriptElements = document.querySelectorAll('.atcoder-during-contest-ui');
+                    for(let e of allScriptElements){
+                        e.remove();
+                    }
+                });
+                // 配置場所
+                let stopButtonInsertZone = document.querySelector("div.editor-buttons, div[data-a2a-title]");
+                stopButtonInsertZone.appendChild(stopButton);
+            }
         }
     }
 })();
