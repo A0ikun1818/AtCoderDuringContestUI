@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-07-28-01
+// @version      2024-07-29-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
+// @exclude      https://atcoder.jp/contests/*/standings/virtual
+// @exclude      https://atcoder.jp/contests/*/editorial
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=atcoder.jp
 // @grant        none
 // @updateURL    https://github.com/A0ikun1818/AtCoderDuringContestUI/raw/main/AtCoderDuringContestUI.user.js
