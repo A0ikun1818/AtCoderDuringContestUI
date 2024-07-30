@@ -64,11 +64,12 @@
         let insertZone = document.getElementById("task-statement");
         console.log(durationTimes);
         if(endTime != null && insertZone != null){
-            let endDate = new Date(endTime.innerText);
+            let endDate = new Date(endTime.innerText.replace(/-/g, "/"));
 
             let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
             let kiji = '<a href="/posts/262">記事</a>';
-            let dateString = endTime.innerText + ", " + endTime.innerHTML;
+            let dateString = endDate.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
+                                                                  day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"});
 
             let msg = "<p>" + dateString + " まで、問題の内容・感想・解法などをSNSに投稿することは"+rule+"に違反する行為です。</p>"
             + "<p>どのような投稿がルールに違反するかはこちらの"+kiji+"もお読みください。</p>"
