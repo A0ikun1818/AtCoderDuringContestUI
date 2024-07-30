@@ -64,7 +64,9 @@
         let insertZone = document.getElementById("task-statement");
         console.log(durationTimes);
         if(endTime != null && insertZone != null){
-            let endDate = new Date(endTime.innerText.replace(/-/g, "/"));
+            let endTimeString = endTime.innerText.replace(/-/g, "/").replace(/\([月火水木金土日]\)/g, "");
+            let endDate = new Date(endTimeString);
+            console.log(endTimeString);
 
             let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
             let kiji = '<a href="/posts/262">記事</a>';
