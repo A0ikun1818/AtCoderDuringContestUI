@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-07-29-01
+// @version      2024-07-30-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -68,9 +68,9 @@
 
             let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
             let kiji = '<a href="/posts/262">記事</a>';
+            let dateString = endDate.toString();
 
-            let msg = "<p>" + endDate.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
-   day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"}) + " まで、問題の内容・感想・解法などをSNSに投稿することは"+rule+"に違反する行為です。</p>"
+            let msg = "<p>" + dateString + " まで、問題の内容・感想・解法などをSNSに投稿することは"+rule+"に違反する行為です。</p>"
             + "<p>どのような投稿がルールに違反するかはこちらの"+kiji+"もお読みください。</p>"
             + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
                 + '    <span aria-hidden="true">&times;</span>'
