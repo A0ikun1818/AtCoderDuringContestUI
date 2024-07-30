@@ -63,12 +63,12 @@
         // 注意書き表示
         let insertZone = document.getElementById("task-statement");
         console.log(durationTimes);
-        if(endTime != null){
+        if(endTime != null && insertZone != null){
             let endDate = new Date(endTime.innerText);
 
             let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
             let kiji = '<a href="/posts/262">記事</a>';
-            let dateString = endDate.toString();
+            let dateString = endTime.innerText + ", " + endTime.innerHTML;
 
             let msg = "<p>" + dateString + " まで、問題の内容・感想・解法などをSNSに投稿することは"+rule+"に違反する行為です。</p>"
             + "<p>どのような投稿がルールに違反するかはこちらの"+kiji+"もお読みください。</p>"
@@ -111,7 +111,7 @@
                 });
                 // 配置場所
                 let stopButtonInsertZone = document.querySelector("div.editor-buttons, div[data-a2a-title]");
-                stopButtonInsertZone.appendChild(stopButton);
+                if(stopButtonInsertZone != null) stopButtonInsertZone.appendChild(stopButton);
             }
         }
     }
