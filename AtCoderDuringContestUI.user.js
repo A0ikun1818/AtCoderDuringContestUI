@@ -73,25 +73,30 @@
             let dateString = endDate.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
                                                                   day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"});
 
-            let msg = "<p>" + dateString + " まで、問題の内容・感想・解法などをSNSに投稿することは"+rule+"に違反する行為です。</p>"
-            + "<p>どのような投稿がルールに違反するかはこちらの"+kiji+"もお読みください。</p>"
+            let msg = ""
             + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-                + '    <span aria-hidden="true">&times;</span>'
-            + '  </button>';
+            + '    <span aria-hidden="true">&times;</span>'
+            + '  </button>'
+            + "<p>" + dateString + " まで、問題の内容・感想・解法などをSNS上に投稿することは"+rule+"に違反する行為です。</p>"
+            + "<p>どのような投稿がルールに違反するかはこちらの"+kiji+"もお読みください。</p>"
+            + "";
             let msgWindow = document.createElement('div');
-            msgWindow.classList.add("alert","alert-warning","alert-dismissible","show");
+            msgWindow.classList.add("alert","alert-warning","alert-dismissible","fade","in");
             msgWindow.classList.add("atcoder-during-contest-ui");
             msgWindow.role = "alert";
             msgWindow.innerHTML = msg;
 
-            let msg2 = "<p>このコンテストでは、生成AI対策のため、問題文を直接生成AIなどのプログラムに与えることを禁止しております。詳しくは以下のルールをご確認ください。</p>"
-            +'<p><a href="/posts/1246" style="color:inherit"><strong>AtCoder生成AI対策ルール</strong></a></p>'
-                        + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-                + '    <span aria-hidden="true">&times;</span>'
-            + '  </button>';
+            let msg2 = ""
+            + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+            + '    <span aria-hidden="true">&times;</span>'
+            + '  </button>'
+            + "<p>このコンテストでは、生成AI対策のため、問題文を直接生成AIなどのプログラムに与えることを禁止しております。"
+            + "詳しくは以下のルールをご確認ください。"
+            + '<br><a href="https://info.atcoder.jp/entry/llm-abc-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
+            + '';
 
             let msgWindow2 = document.createElement('div');
-            msgWindow2.classList.add("alert","alert-warning","alert-dismissible","show");
+            msgWindow2.classList.add("alert","alert-warning","alert-dismissible","fade","in");
             msgWindow2.classList.add("atcoder-during-contest-ui");
             msgWindow2.role = "alert";
             msgWindow2.innerHTML = msg2;
