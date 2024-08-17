@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-08-03-01
+// @version      2024-08-17-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -67,6 +67,8 @@
             let endTimeString = endTime.innerText.replace(/-/g, "/").replace(/\([月火水木金土日]\)/g, "");
             let endDate = new Date(endTimeString);
             console.log(endTimeString);
+
+            if(Number.isNaN(endDate.getTime())) return;
 
             let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
             let kiji = '<a href="/posts/262">記事</a>';
