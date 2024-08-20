@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-08-17-01
+// @version      2024-08-20-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -24,51 +24,20 @@
 
     // console.log(contestId);
     if(endTime > new Date()) return;// コンテスト中は本スクリプトを機能させない
-    // すべての提出→自分の提出
-    let subs = document.querySelectorAll('a[href$="submissions"]');
-    for(let sub of subs){
-        if(sub.querySelector("span.glyphicon-globe") != null || sub.innerText.toString().match(/(全|すべ)ての提出/)){
-            // すべての提出
-            sub.remove();
-        }else{
-            sub.href += "/me";
-        }
-    }
 
-    {
-        // バーチャル順位表タブ削除
-        let style = document.createElement('style');
-        style.id = "atcoder-virtual-hidden";
-        style.classList.add("atcoder-during-contest-ui");
-        style.type = "text/css";
-        style.innerHTML = ""+
-            "li:has(>a[href*='virtual']), li:has(>a[href*='extended']){\n"+
-            "    display: none !important;\n"+
-            "}\n";
-        document.querySelector('html').appendChild(style);
-    }
-    {
-        // 解説タブ・ボタン削除
-        let style = document.createElement('style');
-        style.id = "atcoder-editorial-hidden";
-        style.classList.add("atcoder-during-contest-ui");
-        style.type = "text/css";
-        style.innerHTML = ""+
-            "li:has(a[href*='editorial']), a[href*='editorial']{\n"+
-            "    display: none !important;\n"+
-            "}\n";
-        document.querySelector('html').appendChild(style);
-    }
     {
         // 注意書き表示
         let insertZone = document.getElementById("task-statement");
-        console.log(durationTimes);
+        //console.log(durationTimes);
         if(endTime != null && insertZone != null){
             let endTimeString = endTime.innerText.replace(/-/g, "/").replace(/\([月火水木金土日]\)/g, "");
             let endDate = new Date(endTimeString);
             console.log(endTimeString);
 
-            if(Number.isNaN(endDate.getTime())) return;
+            if(Number.isNaN(endDate.getTime())){
+                //時刻取得失敗
+                return;
+            }
 
             let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
             let kiji = '<a href="/posts/262">記事</a>';
@@ -124,5 +93,41 @@
                 if(stopButtonInsertZone != null) stopButtonInsertZone.appendChild(stopButton);
             }
         }
+    }
+
+    // すべての提出→自分の提出
+    let subs = document.querySelectorAll('a[href$="submissions"]');
+    for(let sub of subs){
+        if(sub.querySelector("span.glyphicon-globe") != null || sub.innerText.toString().match(/(全|すべ)ての提出/)){
+            // すべての提出
+            sub.remove();
+        }else{
+            sub.href += "/me";
+        }
+    }
+
+    {
+        // バーチャル順位表タブ削除
+        let style = document.createElement('style');
+        style.id = "atcoder-virtual-hidden";
+        style.classList.add("atcoder-during-contest-ui");
+        style.type = "text/css";
+        style.innerHTML = ""+
+            "li:has(>a[href*='virtual']), li:has(>a[href*='extended']){\n"+
+            "    display: none !important;\n"+
+            "}\n";
+        document.querySelector('html').appendChild(style);
+    }
+    {
+        // 解説タブ・ボタン削除
+        let style = document.createElement('style');
+        style.id = "atcoder-editorial-hidden";
+        style.classList.add("atcoder-during-contest-ui");
+        style.type = "text/css";
+        style.innerHTML = ""+
+            "li:has(a[href*='editorial']), a[href*='editorial']{\n"+
+            "    display: none !important;\n"+
+            "}\n";
+        document.querySelector('html').appendChild(style);
     }
 })();
