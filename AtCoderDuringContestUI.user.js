@@ -22,7 +22,7 @@
     let durationTimes = document.querySelectorAll('a[href*="timeanddate"]');
     let endTime = (durationTimes.length == 0 ? new Date(9999,12,31) : durationTimes[durationTimes.length - 1]);
 
-    // console.log(contestId);
+    //console.log(contestId);
     if(endTime > new Date()) return;// コンテスト中は本スクリプトを機能させない
 
     {
@@ -32,7 +32,7 @@
         if(endTime != null && insertZone != null){
             let endTimeString = endTime.innerText.replace(/-/g, "/").replace(/\([月火水木金土日]\)/g, "");
             let endDate = new Date(endTimeString);
-            console.log(endTimeString);
+            //console.log(endTimeString);
 
             if(Number.isNaN(endDate.getTime())){
                 //時刻取得失敗
@@ -99,7 +99,7 @@
         let stopButtonInsertZone = document.querySelector("div#main-container");
         if(stopButtonInsertZone != null){
             stopButtonInsertZone.appendChild(stopButton);
-            console.log(stopButtonInsertZone);
+            //console.log(stopButtonInsertZone);
         }
     }
 
