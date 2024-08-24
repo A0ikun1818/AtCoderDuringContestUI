@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-08-20-01
+// @version      2024-08-24-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -22,7 +22,7 @@
     let durationTimes = document.querySelectorAll('a[href*="timeanddate"]');
     let endTime = (durationTimes.length == 0 ? new Date(9999,12,31) : durationTimes[durationTimes.length - 1]);
 
-    // console.log(contestId);
+    //console.log(contestId);
     if(endTime > new Date()) return;// コンテスト中は本スクリプトを機能させない
 
     {
@@ -32,7 +32,7 @@
         if(endTime != null && insertZone != null){
             let endTimeString = endTime.innerText.replace(/-/g, "/").replace(/\([月火水木金土日]\)/g, "");
             let endDate = new Date(endTimeString);
-            console.log(endTimeString);
+            //console.log(endTimeString);
 
             if(Number.isNaN(endDate.getTime())){
                 //時刻取得失敗
@@ -77,21 +77,29 @@
             // AHCでは注意書きを出さない
             if(contestId.match(/(a[brg]c[0-9]{3}|[a-z]{4,9}[0-9]{4})/)!=null) insertZone.prepend(msgWindow);
 
-            // 停止ボタン生成
-            {
-                let stopButton = document.createElement('button');
-                stopButton.innerHTML = "Stop During Mode";
-                stopButton.classList.add("btn","btn-warning","btn-sm","atcoder-during-contest-ui");
-                stopButton.addEventListener('click', function(){
-                    let allScriptElements = document.querySelectorAll('.atcoder-during-contest-ui');
-                    for(let e of allScriptElements){
-                        e.remove();
-                    }
-                });
-                // 配置場所
-                let stopButtonInsertZone = document.querySelector("div.editor-buttons, div[data-a2a-title]");
-                if(stopButtonInsertZone != null) stopButtonInsertZone.appendChild(stopButton);
+        }
+    }
+
+    // 停止ボタン生成
+    {
+        let stopButton = document.createElement('button');
+        stopButton.innerHTML = "Stop During Mode";
+        stopButton.classList.add("btn","btn-warning","btn-sm","atcoder-during-contest-ui");
+        stopButton.addEventListener('click', function(){
+            let allScriptElements = document.querySelectorAll('.atcoder-during-contest-ui');
+            for(let e of allScriptElements){
+                e.remove();
             }
+            let allScriptElements2 = document.querySelectorAll('.atcoder-during-contest-ui-2');
+            for(let e of allScriptElements2){
+                e.classList.remove("atcoder-during-contest-ui-2");
+            }
+        });
+        // 配置場所
+        let stopButtonInsertZone = document.querySelector("div#main-container");
+        if(stopButtonInsertZone != null){
+            stopButtonInsertZone.appendChild(stopButton);
+            //console.log(stopButtonInsertZone);
         }
     }
 
@@ -100,10 +108,23 @@
     for(let sub of subs){
         if(sub.querySelector("span.glyphicon-globe") != null || sub.innerText.toString().match(/(全|すべ)ての提出/)){
             // すべての提出
-            sub.remove();
+            sub.classList.add("atcoder-during-contest-ui-2");
+            //sub.remove();
         }else{
             sub.href += "/me";
         }
+    }
+    {
+        // 「すべての提出」ボタン削除
+        let style = document.createElement('style');
+        style.id = "atcoder-during-contest-ui-css";
+        style.classList.add("atcoder-during-contest-ui");
+        style.type = "text/css";
+        style.innerHTML = ""+
+            ".atcoder-during-contest-ui-2{\n"+
+            "    display: none !important;\n"+
+            "}\n";
+        document.querySelector('html').appendChild(style);
     }
 
     {
