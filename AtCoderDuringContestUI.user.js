@@ -28,7 +28,7 @@
         // 注意書き表示
         let insertZone = document.getElementById("task-statement");
         //console.log(durationTimes);
-        if(endTime != null && insertZone != null){
+        if(endTime != null){
             let endTimeString = endTime.innerText.replace(/-/g, "/").replace(/\([月火水木金土日]\)/g, "");
             let endDate = new Date(endTimeString);
             //console.log(endTimeString);
@@ -39,47 +39,49 @@
             }
             if(endDate > new Date()){
                 //コンテスト中は本スクリプトを機能させない
+                //console.log(endDate);
                 return;
             }
 
-            let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
-            let kiji = '<a href="/posts/262">記事</a>';
-            let dateString = endDate.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
-                                                                  day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"});
+            if(insertZone != null){
+                let rule = '<a href="/contests/'+contestId+'/rules">ルール</a>';
+                let kiji = '<a href="/posts/262">記事</a>';
+                let dateString = endDate.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
+                                                                      day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit"});
 
-            let msg = ""
-            + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-            + '    <span aria-hidden="true">&times;</span>'
-            + '  </button>'
-            + "<p>" + dateString + " まで、問題の内容・感想・解法などをSNS上に投稿することは"+rule+"に違反する行為です。</p>"
-            + "<p>どのような投稿がルールに違反するかはこちらの"+kiji+"もお読みください。</p>"
-            + "";
-            let msgWindow = document.createElement('div');
-            msgWindow.classList.add("alert","alert-warning","alert-dismissible","fade","in");
-            msgWindow.classList.add("atcoder-during-contest-ui");
-            msgWindow.role = "alert";
-            msgWindow.innerHTML = msg;
+                let msg = ""
+                + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+                + '    <span aria-hidden="true">&times;</span>'
+                + '  </button>'
+                + "<p>" + dateString + " まで、問題の内容・感想・解法などをSNS上に投稿することは"+rule+"に違反する行為です。</p>"
+                + "<p>どのような投稿がルールに違反するかはこちらの"+kiji+"もお読みください。</p>"
+                + "";
+                let msgWindow = document.createElement('div');
+                msgWindow.classList.add("alert","alert-warning","alert-dismissible","fade","in");
+                msgWindow.classList.add("atcoder-during-contest-ui");
+                msgWindow.role = "alert";
+                msgWindow.innerHTML = msg;
 
-            let msg2 = ""
-            + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-            + '    <span aria-hidden="true">&times;</span>'
-            + '  </button>'
-            + "<p>このコンテストでは、生成AI対策のため、問題文を直接生成AIなどのプログラムに与えることを禁止しております。"
-            + "詳しくは以下のルールをご確認ください。"
-            + '<br><a href="https://info.atcoder.jp/entry/llm-abc-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
-            + '';
+                let msg2 = ""
+                + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+                + '    <span aria-hidden="true">&times;</span>'
+                + '  </button>'
+                + "<p>このコンテストでは、生成AI対策のため、問題文を直接生成AIなどのプログラムに与えることを禁止しております。"
+                + "詳しくは以下のルールをご確認ください。"
+                + '<br><a href="https://info.atcoder.jp/entry/llm-abc-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
+                + '';
 
-            let msgWindow2 = document.createElement('div');
-            msgWindow2.classList.add("alert","alert-warning","alert-dismissible","fade","in");
-            msgWindow2.classList.add("atcoder-during-contest-ui");
-            msgWindow2.role = "alert";
-            msgWindow2.innerHTML = msg2;
+                let msgWindow2 = document.createElement('div');
+                msgWindow2.classList.add("alert","alert-warning","alert-dismissible","fade","in");
+                msgWindow2.classList.add("atcoder-during-contest-ui");
+                msgWindow2.role = "alert";
+                msgWindow2.innerHTML = msg2;
 
-            // ABC357以降では、生成AIに関する注意事項も表示する
-            if(contestId.match(/abc[0-9]{3}/)!=null && contestId>="abc357") insertZone.prepend(msgWindow2);
-            // AHCでは注意書きを出さない
-            if(contestId.match(/(a[brg]c[0-9]{3}|[a-z]{4,9}[0-9]{4})/)!=null) insertZone.prepend(msgWindow);
-
+                // ABC357以降では、生成AIに関する注意事項も表示する
+                if(contestId.match(/abc[0-9]{3}/)!=null && contestId>="abc357") insertZone.prepend(msgWindow2);
+                // AHCでは注意書きを出さない
+                if(contestId.match(/(a[brg]c[0-9]{3}|[a-z]{4,9}[0-9]{4})/)!=null) insertZone.prepend(msgWindow);
+            }
         }
     }
 
