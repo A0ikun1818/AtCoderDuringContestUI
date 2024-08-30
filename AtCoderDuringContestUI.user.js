@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-08-24-01
+// @version      2024-08-30-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -23,7 +23,6 @@
     let endTime = (durationTimes.length == 0 ? new Date(9999,12,31) : durationTimes[durationTimes.length - 1]);
 
     //console.log(contestId);
-    if(endTime > new Date()) return;// コンテスト中は本スクリプトを機能させない
 
     {
         // 注意書き表示
@@ -36,6 +35,10 @@
 
             if(Number.isNaN(endDate.getTime())){
                 //時刻取得失敗
+                return;
+            }
+            if(endDate > new Date()){
+                //コンテスト中は本スクリプトを機能させない
                 return;
             }
 
