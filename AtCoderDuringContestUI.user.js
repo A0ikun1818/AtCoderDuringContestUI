@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-11-16-01
+// @version      2024-11-16-02
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -18,7 +18,7 @@
 
     const AI_RULE_V1 = "abc357";
     const AI_RULE_V2_ABC = "abc380";
-    const AI_RULE_V2_ARC = "arc186";
+    const AI_RULE_V2_ARC = "arc187";
 
     // Your code here...
     let path = location.pathname.toString().split('/');
