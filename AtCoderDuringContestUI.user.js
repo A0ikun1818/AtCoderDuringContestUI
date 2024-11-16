@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-11-16-02
+// @version      2024-11-16-03
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -87,8 +87,8 @@
 
                 // ABC357以降、もしくはARC187以降では、生成AIに関する注意事項も表示する
                 if((contestId.match(/abc[0-9]{3}/)!=null && contestId>=AI_RULE_V1) || (contestId.match(/arc[0-9]{3}/)!=null && contestId>=AI_RULE_V2_ARC)) insertZone.prepend(msgWindow2);
-                // AHCでは注意書きを出さない
-                if(contestId.match(/(a[brg]c[0-9]{3}|[a-z]{4,9}[0-9]{4})/)!=null) insertZone.prepend(msgWindow);
+                // AHCでも注意書きを出す
+                if(contestId.match(/(a[brgh]c[0-9]{3}|[a-z]{4,9}[0-9]{4})/)!=null) insertZone.prepend(msgWindow);
             }
         }
     }
