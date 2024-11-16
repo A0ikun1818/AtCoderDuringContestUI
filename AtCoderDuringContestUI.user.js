@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-08-30-01
+// @version      2024-11-16-01
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -15,6 +15,10 @@
 
 (function() {
     'use strict';
+
+    const AI_RULE_V1 = "abc357";
+    const AI_RULE_V2_ABC = "abc380";
+    const AI_RULE_V2_ARC = "arc186";
 
     // Your code here...
     let path = location.pathname.toString().split('/');
@@ -63,13 +67,17 @@
                 msgWindow.innerHTML = msg;
 
                 let msg2 = ""
-                + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-                + '    <span aria-hidden="true">&times;</span>'
-                + '  </button>'
-                + "<p>このコンテストでは、生成AI対策のため、問題文を直接生成AIなどのプログラムに与えることを禁止しております。"
-                + "詳しくは以下のルールをご確認ください。"
-                + '<br><a href="https://info.atcoder.jp/entry/llm-abc-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
-                + '';
+                    + '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+                    + '    <span aria-hidden="true">&times;</span>'
+                    + '  </button>'
+                    + "<p>このコンテストでは、生成AI対策のため、問題文を直接生成AIなどのプログラムに与えることを禁止しております。"
+                    + "詳しくは以下のルールをご確認ください。";
+                if((contestId.match(/abc[0-9]{3}/)!=null && contestId>=AI_RULE_V2_ABC) || (contestId.match(/arc[0-9]{3}/)!=null && contestId>=AI_RULE_V2_ARC)){
+                    msg2 += '<br><a href="https://info.atcoder.jp/entry/llm-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
+                }else{
+                    msg2 += '<br><a href="https://info.atcoder.jp/entry/llm-abc-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
+                }
+                msg2 += '';
 
                 let msgWindow2 = document.createElement('div');
                 msgWindow2.classList.add("alert","alert-warning","alert-dismissible","fade","in");
@@ -77,8 +85,8 @@
                 msgWindow2.role = "alert";
                 msgWindow2.innerHTML = msg2;
 
-                // ABC357以降では、生成AIに関する注意事項も表示する
-                if(contestId.match(/abc[0-9]{3}/)!=null && contestId>="abc357") insertZone.prepend(msgWindow2);
+                // ABC357以降、もしくはARC187以降では、生成AIに関する注意事項も表示する
+                if((contestId.match(/abc[0-9]{3}/)!=null && contestId>=AI_RULE_V1) || (contestId.match(/arc[0-9]{3}/)!=null && contestId>=AI_RULE_V2_ARC)) insertZone.prepend(msgWindow2);
                 // AHCでは注意書きを出さない
                 if(contestId.match(/(a[brg]c[0-9]{3}|[a-z]{4,9}[0-9]{4})/)!=null) insertZone.prepend(msgWindow);
             }
