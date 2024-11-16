@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AtCoder During Contest UI
 // @namespace    http://tampermonkey.net/
-// @version      2024-11-16-03
+// @version      2024-11-16-04
 // @description  try to take over the world!
 // @author       A0ikun1818
 // @match        https://atcoder.jp/contests/*
@@ -73,7 +73,7 @@
                     + "<p>このコンテストでは、生成AI対策のため、問題文を直接生成AIなどのプログラムに与えることを禁止しております。"
                     + "詳しくは以下のルールをご確認ください。";
                 if((contestId.match(/abc[0-9]{3}/)!=null && contestId>=AI_RULE_V2_ABC) || (contestId.match(/arc[0-9]{3}/)!=null && contestId>=AI_RULE_V2_ARC)){
-                    msg2 += '<br><a href="https://info.atcoder.jp/entry/llm-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
+                    msg2 += '<br><a href="https://info.atcoder.jp/entry/llm-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール - 20241115版</strong></a></p>'
                 }else{
                     msg2 += '<br><a href="https://info.atcoder.jp/entry/llm-abc-rules-ja" class="alert-link"><strong>AtCoder生成AI対策ルール</strong></a></p>'
                 }
